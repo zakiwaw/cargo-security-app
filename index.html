@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#0f172a">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <title>Cargo Security – AWB-Sicherung</title>
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="icon.svg">
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
+</head>
+<body>
+  <header>
+    <h1>🛡️ Cargo Security</h1>
+    <p class="subtitle">AWB-Sicherung · Cargo City</p>
+    <div id="syncBadge" class="sync warn">…</div>
+  </header>
+
+  <main>
+    <section class="stats">
+      <div class="stat"><span id="statHeute">0</span><label>Heute aktiv</label></div>
+      <div class="stat"><span id="statGesamt">0</span><label>Einträge aktiv</label></div>
+    </section>
+
+    <section class="card">
+      <h2>AWB erfassen</h2>
+      <div class="awb-input">
+        <input id="awbInput" type="text" placeholder="AWB-Nummer eingeben oder scannen …" autocomplete="off">
+        <button id="scanBtn" type="button">📷 Scannen</button>
+      </div>
+      <div id="scanner" class="scanner hidden"></div>
+
+      <div class="form-grid">
+        <label>Sicherheitsstatus
+          <select id="statusInput">
+            <option value="SPX">SPX – sicher (Passagierflugzeug)</option>
+            <option value="SCO">SCO – sicher (Frachter)</option>
+            <option value="NS">Nicht sicher</option>
+          </select>
+        </label>
+        <label>Bearbeiter
+          <input id="agentInput" type="text" placeholder="Dein Name / Dienst">
+        </label>
+        <label class="full">Bemerkung (optional)
+          <input id="noteInput" type="text" placeholder="z. B. Lagerbereich, Auffälligkeiten …">
+        </label>
+      </div>
+      <button id="saveBtn" class="primary" type="button">AWB sichern</button>
+      <div id="message" class="message"></div>
+    </section>
+
+    <section class="card">
+      <div class="list-head">
+        <h2>Protokoll</h2>
+        <input id="searchInput" type="search" placeholder="Suchen …">
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>Zeit</th><th>AWB</th><th>Status</th><th>Bemerkung</th><th>Bearbeiter</th><th></th></tr>
+          </thead>
+          <tbody id="entryTable"></tbody>
+        </table>
+      </div>
+      <p class="hint">Löschen ist nicht möglich – fehlerhafte Einträge bitte stornieren (bleibt nachvollziehbar im Protokoll).</p>
+    </section>
+
+    <section class="card">
+      <h2>Einstellungen · Google Sheets</h2>
+      <label>Web-App-URL aus Google Apps Script
+        <input id="sheetUrlInput" type="url" placeholder="https://script.google.com/macros/s/…/exec">
+      </label>
+      <div class="btn-row">
+        <button id="saveUrlBtn" class="primary" type="button">URL speichern</button>
+        <button id="syncBtn" type="button">☁️ Jetzt synchronisieren</button>
+      </div>
+      <p class="hint">Anleitung zum Einrichten steht in der README.</p>
+    </section>
+  </main>
+
+  <footer>Daten werden lokal zwischengespeichert und mit Google Sheets synchronisiert.</footer>
+  <script src="app.js"></script>
+</body>
+</html>
